@@ -31,59 +31,50 @@ A fair and efficient task distribution system for Wohngemeinschaften (WGs) or sh
 
 ## 📸 Screenshots
 
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 200px">
-  <div style="flex: 0 0 48%; margin-bottom: 20px;">
-    <img src="screenshots/1.png" width="100%" alt="First Open">
-    <p align="center"><strong>First Open</strong></p>
-  </div>
-  <div style="flex: 0 0 48%; margin-bottom: 20px;">
-    <img src="screenshots/2.png" width="100%" alt="Landing Page">
-    <p align="center"><strong>Landing Page</strong></p>
-  </div>
-  <div style="flex: 0 0 48%; margin-bottom: 20px;">
-    <img src="screenshots/3.png" width="100%" alt="Task Overview">
-    <p align="center"><strong>Task Overview</strong></p>
-  </div>
-  <div style="flex: 0 0 48%; margin-bottom: 20px;">
-    <img src="screenshots/4.png" width="100%" alt="Task Details">
-    <p align="center"><strong>Task Details</strong></p>
-  </div>
-</div>
+Here are some screenshots of the Putzplan system in action:
+
+| First Open | Landing Page |
+|------------|--------------|
+| <img src="screenshots/1.png" width="300" alt="First Open"> | <img src="screenshots/2.png" width="300" alt="Landing Page"> |
+| **Task Overview** | **Task Details** |
+| <img src="screenshots/3.png" width="300" alt="Task Overview"> | <img src="screenshots/4.png" width="300" alt="Task Details"> |
+
 ## 🛠️ Configuration
 
 Create a `data.json` file in the project root with the following structure:
 
 ```json
 {
-   "tasks": [
-      {
-         "id": 1,
-         "name": "Clean Bathroom",
-         "frequency": "weekly",
-         "estimatedTime": 45,
-         "subtasks": [
-            {
-               "id": 101,
-               "name": "Clean Toilet",
-               "description": "Thoroughly clean and disinfect the toilet",
-               "cleaningProducts": ["Toilet cleaner", "Brush", "Gloves"],
-               "tips": "Don't forget to clean under the rim",
-               "cautions": "Use gloves and ensure good ventilation"
-            },
-            // More subtasks...
-         ]
-      },
-      // More tasks...
-   ],
-   "users": [
-      {
-         "name": "Alice",
-         "color": "#FF5733"
-      },
-      // More users...
-   ]
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Clean Bathroom",
+      "frequency": "weekly",
+      "estimatedTime": 45,
+      "subtasks": [
+        {
+          "id": 101,
+          "name": "Clean Toilet",
+          "description": "Thoroughly clean and disinfect the toilet",
+          "cleaningProducts": ["Toilet cleaner", "Brush", "Gloves"],
+          "tips": "Don't forget to clean under the rim",
+          "cautions": "Use gloves and ensure good ventilation"
+        },
+        // More subtasks...
+      ]
+    },
+    // More tasks...
+  ],
+  "users": [
+    {
+      "name": "Alice",
+      "color": "#FF5733"
+    },
+    // More users...
+  ]
 }
 ```
+
 ### Interfaces:
 ```ts
 export interface Subtask {
