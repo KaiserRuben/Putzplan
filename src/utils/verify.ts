@@ -1,15 +1,4 @@
-import {TaskAssigner} from "./taskAssigner.ts";
-
-interface Task {
-    id: number;
-    name: string;
-    frequency: 'weekly' | 'bi-weekly' | 'monthly';
-    estimatedTime: number;
-}
-
-interface User {
-    name: string;
-}
+import {inputUser, Task, TaskAssigner} from "./taskAssigner.ts";
 
 interface VerificationResult {
     userTaskCounts: { [userName: string]: { [taskName: string]: number } };
@@ -49,7 +38,7 @@ function verifyTaskAssignments(
         }
     }
 
-    return { userTaskCounts, taskTotalCounts, totalTasksPerUser };
+    return {userTaskCounts, taskTotalCounts, totalTasksPerUser};
 }
 
 function printVerificationResult(result: VerificationResult): void {
@@ -71,19 +60,19 @@ function printVerificationResult(result: VerificationResult): void {
 
 // Example usage:
 const tasks: Task[] = [
-    { id: 1, name: "Kitchen", frequency: "weekly", estimatedTime: 60 },
-    { id: 2, name: "Living Room", frequency: "weekly", estimatedTime: 30 },
-    { id: 3, name: "Workspace", frequency: "weekly", estimatedTime: 20 },
-    { id: 4, name: "Bathroom", frequency: "weekly", estimatedTime: 40 },
-    { id: 5, name: "Hallway", frequency: "bi-weekly", estimatedTime: 15 },
-    { id: 6, name: "General Tasks", frequency: "bi-weekly", estimatedTime: 25 },
-    { id: 7, name: "Clean Oven", frequency: "monthly", estimatedTime: 45 }
+    {id: 1, name: "Kitchen", frequency: "weekly", estimatedTime: 60, subtasks: []},
+    {id: 2, name: "Living Room", frequency: "weekly", estimatedTime: 30, subtasks: []},
+    {id: 3, name: "Workspace", frequency: "weekly", estimatedTime: 20, subtasks: []},
+    {id: 4, name: "Bathroom", frequency: "weekly", estimatedTime: 40, subtasks: []},
+    {id: 5, name: "Hallway", frequency: "bi-weekly", estimatedTime: 15, subtasks: []},
+    {id: 6, name: "General Tasks", frequency: "bi-weekly", estimatedTime: 25, subtasks: []},
+    {id: 7, name: "Clean Oven", frequency: "monthly", estimatedTime: 45, subtasks: []}
 ];
 
-const users: User[] = [
-    { name: "Alice" },
-    { name: "Bob" },
-    { name: "Charlie" }
+const users: inputUser[] = [
+    {name: "Alice"},
+    {name: "Bob"},
+    {name: "Charlie"}
 ];
 
 const assigner = new TaskAssigner(tasks, users);

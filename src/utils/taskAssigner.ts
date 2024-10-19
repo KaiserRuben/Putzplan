@@ -22,7 +22,7 @@ export interface Task {
 
 export interface inputUser {
     name: string;
-    color: string;
+    color?: string;
 }
 
 

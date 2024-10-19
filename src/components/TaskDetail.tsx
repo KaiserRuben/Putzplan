@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTasksForWeek, Task } from "../utils/taskAssigner";
 import { useLocalStorage } from "../utils/localstorage.ts";
 import { getCurrentWeekNumber } from "../utils/date.ts";
-import { FaClock, FaRedo, FaExclamationTriangle, FaTrophy, FaArrowLeft } from 'react-icons/fa';
+import confetti from 'canvas-confetti';
+import {
+    FaExclamationTriangle,
+    FaSprayCan,
+    FaLightbulb,
+    FaChevronLeft,
+    FaChevronRight,
+    FaTimes,
+    FaCheck,
+    FaUndo,
+    FaFire
+} from 'react-icons/fa';
 
 const TaskDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const weekNumber = getCurrentWeekNumber();
+    const yearNumber = new Date().getFullYear();
     const [currentUser] = useLocalStorage<string | null>('currentUser', null);
     const [task, setTask] = useState<Task | null>(null);
-    const weekNumber = getCurrentWeekNumber();
+    const [currentSubtaskIndex, setCurrentSubtaskIndex] = useState(0);
+    const [completedSubtasks, setCompletedSubtasks] = useLocalStorage<number[]>(`completedSubtasks-${id}-${weekNumber}-${yearNumber}`, []);
+    const [streak, setStreak] = useLocalStorage<number>('cleaningStreak', 0);
 
     useEffect(() => {
         if (currentUser && id) {
@@ -20,105 +36,210 @@ const TaskDetail: React.FC = () => {
         }
     }, [currentUser, id, weekNumber]);
 
-    if (!currentUser) {
-        return (
-            <div className="flex items-center justify-center h-screen bg-gradient-to-br from-pink-200 to-purple-300">
-                <motion.div
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-white p-8 rounded-xl shadow-lg text-center"
-                >
-                    <h2 className="text-2xl font-bold text-purple-600 mb-4">Ups! Kein Putz-Held ausgewählt</h2>
-                    <p className="text-gray-600 mb-6">Bitte wähle zuerst deinen Putz-Helden aus!</p>
-                    <Link
-                        to="/"
-                        className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        Held auswählen
-                    </Link>
-                </motion.div>
-            </div>
-        );
-    }
+    const handlePrevSubtask = () => {
+        setCurrentSubtaskIndex((prev) => (prev > 0 ? prev - 1 : task!.subtasks.length - 1));
+    };
 
-    if (!task) return (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-br from-pink-200 to-purple-300">
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white p-8 rounded-xl shadow-lg text-center"
-            >
-                <h2 className="text-2xl font-bold text-purple-600 mb-4">Quest nicht gefunden</h2>
-                <p className="text-gray-600 mb-6">Diese Reinigungsmission scheint nicht zu existieren!</p>
-                <Link
-                    to="/tasks"
-                    className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                >
-                    Zurück zur Questliste
-                </Link>
-            </motion.div>
-        </div>
-    );
+    const handleNextSubtask = () => {
+        setCurrentSubtaskIndex((prev) => (prev < task!.subtasks.length - 1 ? prev + 1 : 0));
+    };
+
+    const handleExit = () => {
+        navigate('/tasks');
+    };
+
+    const handleCompleteSubtask = () => {
+        if (task) {
+            if (completedSubtasks.includes(currentSubtaskIndex)) {
+                // Uncomplete the subtask
+                const newCompletedSubtasks = completedSubtasks.filter(index => index !== currentSubtaskIndex);
+                setCompletedSubtasks(newCompletedSubtasks);
+                if (newCompletedSubtasks.length < task.subtasks.length) {
+                    setStreak(streak - 1);
+                }
+            } else {
+                // Complete the subtask
+                const newCompletedSubtasks = [...completedSubtasks, currentSubtaskIndex];
+                setCompletedSubtasks(newCompletedSubtasks);
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+                if (newCompletedSubtasks.length === task.subtasks.length) {
+                    setStreak(streak + 1);
+                }
+            }
+            handleNextSubtask();
+        }
+    };
+
+    if (!task) return null;
+
+    const currentSubtask = task.subtasks[currentSubtaskIndex];
+    const progress = (completedSubtasks.length / task.subtasks.length) * 100;
+    const isCurrentSubtaskCompleted = completedSubtasks.includes(currentSubtaskIndex);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-200 to-blue-300 p-8">
-            <motion.div
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <Link to="/tasks" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-6 transition duration-300 ease-in-out transform hover:translate-x-2">
-                    <FaArrowLeft className="mr-2" /> Zurück zur Questliste
-                </Link>
-                <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-6">
-                    {task.name}
-                </h1>
-            </motion.div>
+        <div className="h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4 flex flex-col">
+            {streak > 0 && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-gradient-to-r from-orange-400 to-red-400 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4"
+                >
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <FaFire className="text-yellow-300 text-xl sm:text-2xl mr-2 sm:mr-3 flex-shrink-0" />
+                            <div>
+                                <p className="text-white text-sm sm:text-xl font-bold">
+                                    {streak} Day{streak > 1 ? 's' : ''} Streak!
+                                </p>
+                                <p className="text-yellow-100 text-xs sm:text-sm">
+                                    {streak > 1 ? 'Du bist in Topform! 🔥' : 'Toller Start! Weiter so!'}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="text-2xl sm:text-4xl font-bold text-yellow-300">
+                            {streak}
+                        </div>
+                    </div>
+                    {streak > 1 && (
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: '100%' }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="h-1 sm:h-2 bg-yellow-300 mt-2 sm:mt-3 rounded-full"
+                        />
+                    )}
+                </motion.div>
+            )}
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-white rounded-xl shadow-lg p-6 mb-8"
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: 0.3}}
+                className="bg-white rounded-lg shadow-lg p-4 sm:p-6 flex-grow flex flex-col overflow-hidden"
             >
-                <p className="text-xl text-gray-700 mb-4 flex items-center">
-                    <FaClock className="mr-2 text-green-500" /> Zeit: {task.estimatedTime} Minuten
-                </p>
-                <p className="text-xl text-gray-700 flex items-center">
-                    <FaRedo className="mr-2 text-blue-500" /> Häufigkeit: {task.frequency}
-                </p>
-            </motion.div>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-purple-600">{currentSubtask.name}</h2>
+                </div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-            >
-                <h2 className="text-2xl font-bold text-indigo-700 mb-4 flex items-center">
-                    <FaTrophy className="mr-2" /> Unter-Quests
-                </h2>
-                <ul className="space-y-4">
-                    <AnimatePresence>
-                        {task.subtasks.map((subtask) => (
-                            <motion.li
-                                key={subtask.id}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 20 }}
-                                className="bg-white rounded-lg shadow p-4"
+                <div className="bg-purple-100 rounded-full h-3 sm:h-4 mb-4 sm:mb-6 overflow-hidden">
+                    <motion.div
+                        className="bg-purple-500 h-full"
+                        initial={{width: 0}}
+                        animate={{width: `${progress}%`}}
+                        transition={{duration: 0.5}}
+                    />
+                </div>
+
+                <div className="text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4">
+                    {completedSubtasks.length}/{task.subtasks.length} subtasks completed
+                </div>
+
+                <div className="flex-grow overflow-y-auto">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={currentSubtaskIndex}
+                            initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            exit={{opacity: 0, y: -20}}
+                            transition={{duration: 0.3}}
+                            className="flex flex-col"
+                        >
+
+                            <motion.div
+                                className="bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 shadow-lg"
+                                whileHover={{scale: 1.02}}
+                                transition={{type: "spring", stiffness: 300}}
                             >
-                                <h3 className="text-xl font-semibold text-indigo-600 mb-2">{subtask.name}</h3>
-                                <p className="text-gray-600 mb-2">{subtask.description}</p>
-                                {subtask.cautions && (
-                                    <p className="text-red-600 flex items-center">
-                                        <FaExclamationTriangle className="mr-2" /> Achtung: {subtask.cautions}
+                                <p className="text-white text-lg sm:text-2xl font-semibold leading-relaxed">
+                                    {currentSubtask.description}
+                                </p>
+                            </motion.div>
+
+                            {currentSubtask.cautions && (
+                                <div className="bg-red-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <p className="text-red-600 flex items-center text-sm sm:text-xl">
+                                        <FaExclamationTriangle
+                                            className="mr-2 flex-shrink-0"/> {currentSubtask.cautions}
                                     </p>
-                                )}
-                            </motion.li>
-                        ))}
+                                </div>
+                            )}
+
+                            {currentSubtask.cleaningProducts && (
+                                <div className="bg-green-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                                    <h4 className="text-lg sm:text-xl font-semibold text-green-600 flex items-center mb-2">
+                                        <FaSprayCan className="mr-2 flex-shrink-0"/> Reinigungsprodukte
+                                    </h4>
+                                    <ul className="list-disc list-inside text-sm sm:text-lg text-gray-700">
+                                        {currentSubtask.cleaningProducts.map((product: string, index: number) => (
+                                            <li key={index} className="mb-1 sm:mb-2">{product}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {currentSubtask.tips && (
+                                <div className="bg-yellow-50 rounded-lg p-3 sm:p-4 mt-3 sm:mt-4">
+                                    <div className="flex items-start">
+                                        <FaLightbulb
+                                            className="text-yellow-500 text-lg sm:text-xl mr-2 mt-1 flex-shrink-0"/>
+                                        <p className="text-sm sm:text-lg text-gray-700">{currentSubtask.tips}</p>
+                                    </div>
+                                </div>
+                            )}
+
+                        </motion.div>
                     </AnimatePresence>
-                </ul>
+                </div>
+
+                <motion.button
+                    whileHover={{scale: 1.05}}
+                    whileTap={{scale: 0.95}}
+                    onClick={handleCompleteSubtask}
+                    className={`w-full ${isCurrentSubtaskCompleted ? 'bg-yellow-500' : 'bg-green-500'} text-white p-3 sm:p-4 rounded-full shadow-md text-xl sm:text-2xl font-semibold mt-4 sm:mt-6 flex items-center justify-center`}
+                >
+                    {isCurrentSubtaskCompleted ? (
+                        <>
+                            <FaUndo className="mr-2"/> Als unerledigt markieren
+                        </>
+                    ) : (
+                        <>
+                            <FaCheck className="mr-2"/> Als erledigt markieren
+                        </>
+                    )}
+                </motion.button>
             </motion.div>
+
+            <div className="flex justify-between items-center mt-4">
+                <motion.button
+                    whileHover={{scale: 1.1}}
+                    whileTap={{scale: 0.9}}
+                    onClick={handlePrevSubtask}
+                    className="bg-purple-600 text-white p-3 sm:p-4 rounded-full shadow-md text-xl sm:text-2xl"
+                >
+                    <FaChevronLeft/>
+                </motion.button>
+                <motion.button
+                    whileHover={{scale: 1.1}}
+                    whileTap={{scale: 0.9}}
+                    onClick={handleExit}
+                    className="bg-red-500 text-white p-3 sm:p-4 rounded-full shadow-md text-xl sm:text-2xl"
+                >
+                <FaTimes />
+                </motion.button>
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleNextSubtask}
+                    className="bg-purple-600 text-white p-3 sm:p-4 rounded-full shadow-md text-xl sm:text-2xl"
+                >
+                    <FaChevronRight />
+                </motion.button>
+            </div>
         </div>
     );
 };
