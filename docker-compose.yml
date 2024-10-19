@@ -1,6 +1,7 @@
 version: '3'
 services:
   putzplan:
+    restart: always
     build: .
     ports:
       - "9876:80"

@@ -1,0 +1,79 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Clean Bathroom",
+      "frequency": "weekly",
+      "estimatedTime": 45,
+      "subtasks": [
+        {
+          "id": 101,
+          "name": "Clean Toilet",
+          "description": "Thoroughly clean and disinfect the toilet",
+          "cleaningProducts": ["Toilet cleaner", "Brush", "Gloves"],
+          "tips": "Don't forget to clean under the rim",
+          "cautions": "Use gloves and ensure good ventilation"
+        },
+        {
+          "id": 102,
+          "name": "Clean Shower",
+          "description": "Scrub shower walls and floor",
+          "cleaningProducts": ["All-purpose cleaner", "Sponge"],
+          "tips": "Use a squeegee after each shower to prevent buildup",
+          "cautions": "Be careful of slippery surfaces"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Vacuum Living Room",
+      "frequency": "weekly",
+      "estimatedTime": 30,
+      "subtasks": [
+        {
+          "id": 201,
+          "name": "Vacuum Floors",
+          "description": "Vacuum all floor surfaces in the living room",
+          "cleaningProducts": ["Vacuum cleaner"],
+          "tips": "Move furniture to clean underneath",
+          "cautions": "Watch out for loose cables or small objects"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Deep Clean Kitchen",
+      "frequency": "bi-weekly",
+      "estimatedTime": 60,
+      "subtasks": [
+        {
+          "id": 301,
+          "name": "Clean Oven",
+          "description": "Clean inside of oven and oven racks",
+          "cleaningProducts": ["Oven cleaner", "Sponge", "Gloves"],
+          "tips": "Let cleaner sit for recommended time before scrubbing",
+          "cautions": "Ensure good ventilation and wear gloves"
+        },
+        {
+          "id": 302,
+          "name": "Clean Refrigerator",
+          "description": "Clean inside of fridge and throw out old food",
+          "cleaningProducts": ["All-purpose cleaner", "Cloth"],
+          "tips": "Remove shelves for easier cleaning",
+          "cautions": "Don't use harsh chemicals on food contact surfaces"
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "name": "Alice"
+    },
+    {
+      "name": "Bob"
+    },
+    {
+      "name": "Charlie"
+    }
+  ]
+}
