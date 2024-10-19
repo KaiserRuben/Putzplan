@@ -1,4 +1,18 @@
 {
+  "users": [
+    {
+      "name": "Ruben",
+      "color": "#0000ff"
+    },
+    {
+      "name": "Sam",
+      "color": "#ff0000"
+    },
+    {
+      "name": "Vroni",
+      "color": "#00ff00"
+    }
+  ],
   "tasks": [
     {
       "id": 1,
@@ -10,7 +24,10 @@
           "id": 101,
           "name": "Kühlschrank aufräumen",
           "description": "Alte Reste entfernen und Oberflächen abwischen",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Archäologische Funde bitte dem Museum melden. 😉",
           "cautions": "Achtung vor mutiertem Gemüse!"
         },
@@ -18,7 +35,11 @@
           "id": 102,
           "name": "Arbeitsflächen und Herd wischen",
           "description": "Alle Oberflächen gründlich reinigen",
-          "cleaningProducts": ["Küchenreiniger", "Schwamm", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Küchenreiniger",
+            "Schwamm",
+            "Mikrofasertuch"
+          ],
           "tips": "Glänzender Herd = glücklicher Koch.",
           "cautions": "Kein Wettrennen mit dem Dampfgarer."
         },
@@ -26,7 +47,10 @@
           "id": 103,
           "name": "Armaturen reinigen",
           "description": "Armaturen und Spüle gründlich säubern und polieren",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Zahnbürste für Fugen. Nicht die eigene nehmen!",
           "cautions": "Armaturen sind keine Kletterwände."
         },
@@ -34,7 +58,10 @@
           "id": 104,
           "name": "Toaster, Mikrowelle und Ofen prüfen",
           "description": "Geräte innen und außen reinigen",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Mikrowelle: Zitrone + Wasser = Dampfsauna für Krusten.",
           "cautions": "Keine Experimente à la 'Mythbusters'."
         },
@@ -42,7 +69,10 @@
           "id": 105,
           "name": "Schrankoberflächen und Griffe wischen",
           "description": "Alle sichtbaren Oberflächen und Griffe reinigen",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Griffe sauberer als deine Hände? Challenge accepted!",
           "cautions": "Schränke öffnen sich nicht magisch. Noch nicht."
         },
@@ -50,7 +80,10 @@
           "id": 106,
           "name": "Eine Schublade nach Wahl reinigen",
           "description": "Eine Küchenschublade gründlich aufräumen",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Schatzkiste oder Chaoszone? Du entscheidest!",
           "cautions": "Vorsicht vor flüchtenden Teelöffeln."
         },
@@ -58,7 +91,10 @@
           "id": 107,
           "name": "Boden wischen",
           "description": "Küchenboden gründlich reinigen",
-          "cleaningProducts": ["Bodenreiniger", "Mopp"],
+          "cleaningProducts": [
+            "Bodenreiniger",
+            "Mopp"
+          ],
           "tips": "Socken-Curling ist kein olympischer Sport.",
           "cautions": "Rutschgefahr! Moonwalk nur für Fortgeschrittene."
         },
@@ -66,7 +102,10 @@
           "id": 108,
           "name": "Müll rausbringen",
           "description": "Restmüll, Plastik und Bio entsorgen, Biomüll-Eimer reinigen",
-          "cleaningProducts": ["Mülltüten", "Allzweckreiniger"],
+          "cleaningProducts": [
+            "Mülltüten",
+            "Allzweckreiniger"
+          ],
           "tips": "Frische Luft! Dein Fitnessstudio für 2 Minuten.",
           "cautions": "Müllbeutel sind keine Hanteln."
         }
@@ -76,7 +115,7 @@
       "id": 2,
       "name": "Wohnbereich",
       "frequency": "weekly",
-      "estimatedTime": 15,
+      "estimatedTime": 45,
       "subtasks": [
         {
           "id": 201,
@@ -90,7 +129,10 @@
           "id": 202,
           "name": "Tische und Oberflächen wischen",
           "description": "Alle Oberflächen von Staub und Flecken befreien",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Staub-Detektiv: Dein neuer Nebenjob.",
           "cautions": "Keine Staubskulpturen erschaffen."
         },
@@ -98,7 +140,9 @@
           "id": 203,
           "name": "Staubsaugen",
           "description": "Boden und Teppiche gründlich saugen",
-          "cleaningProducts": ["Staubsauger"],
+          "cleaningProducts": [
+            "Staubsauger"
+          ],
           "tips": "Staubsauger-Rennen sind nicht erlaubt. Leider.",
           "cautions": "Socken sind keine Staubsaugerbeutel."
         },
@@ -106,7 +150,9 @@
           "id": 204,
           "name": "Pflanzen gießen",
           "description": "Alle Zimmerpflanzen nach Bedarf gießen",
-          "cleaningProducts": ["Gießkanne"],
+          "cleaningProducts": [
+            "Gießkanne"
+          ],
           "tips": "Pflanzenflüsterer gesucht! Bewirb dich jetzt.",
           "cautions": "Übergießen macht keine Regenwald-Atmosphäre."
         },
@@ -122,9 +168,21 @@
           "id": 206,
           "name": "Fernbedienungen desinfizieren",
           "description": "Alle Fernbedienungen gründlich reinigen",
-          "cleaningProducts": ["Desinfektionstücher"],
+          "cleaningProducts": [
+            "Desinfektionstücher"
+          ],
           "tips": "Saubere Fernbedienung = klares TV-Bild. Oder so.",
           "cautions": "Nicht in Wasser tauchen, auch wenn's verlockend ist."
+        },
+        {
+          "id": 207,
+          "name": "Oberfläche vom Fernseher wichen",
+          "description": "Staub entfernen und Oberfläche reinigen",
+          "cleaningProducts": [
+            "Mikrofasertuch"
+          ],
+          "tips": "Klares Bild = klares Sehvergnügen. Hoffentlich.",
+          "cautions": "Fernseher ist kein Klettergerüst."
         }
       ]
     },
@@ -138,7 +196,9 @@
           "id": 301,
           "name": "Staubsaugen",
           "description": "Boden gründlich saugen",
-          "cleaningProducts": ["Staubsauger"],
+          "cleaningProducts": [
+            "Staubsauger"
+          ],
           "tips": "Kopfhörer auf, Lieblingssong an, und los geht's!",
           "cautions": "Staubsauger ist kein Hoverboard."
         },
@@ -146,7 +206,10 @@
           "id": 302,
           "name": "Tisch wischen",
           "description": "Arbeitsfläche gründlich reinigen",
-          "cleaningProducts": ["Allzweckreiniger", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Allzweckreiniger",
+            "Mikrofasertuch"
+          ],
           "tips": "Sauberer Schreibtisch = produktiver Geist. Vielleicht.",
           "cautions": "Wasser und Elektronik sind keine Freunde."
         },
@@ -162,7 +225,9 @@
           "id": 304,
           "name": "Monitore abstauben",
           "description": "Bildschirme vorsichtig reinigen",
-          "cleaningProducts": ["Spezielle Bildschirmreinigungstücher"],
+          "cleaningProducts": [
+            "Spezielle Bildschirmreinigungstücher"
+          ],
           "tips": "Klares Bild = klarer Kopf. Wir versprechen nichts!",
           "cautions": "Keine Wunder erwarten. Es bleibt ein Bildschirm."
         }
@@ -178,7 +243,9 @@
           "id": 401,
           "name": "Schuhregal ordnen",
           "description": "Schuhe ordentlich aufstellen und Regal säubern",
-          "cleaningProducts": ["Feuchtes Tuch"],
+          "cleaningProducts": [
+            "Feuchtes Tuch"
+          ],
           "tips": "Schuhe nach Farbe sortieren für den Regenbogen-Effekt!",
           "cautions": "Schuhturm-Bauen ist kein olympischer Sport."
         },
@@ -186,7 +253,11 @@
           "id": 402,
           "name": "Staubsaugen",
           "description": "Boden gründlich saugen, bei Bedarf wischen",
-          "cleaningProducts": ["Staubsauger", "Mopp", "Bodenreiniger"],
+          "cleaningProducts": [
+            "Staubsauger",
+            "Mopp",
+            "Bodenreiniger"
+          ],
           "tips": "Sauberer Flur = guter erster Eindruck. Oder so.",
           "cautions": "Sockensurfen nur auf eigene Gefahr."
         }
@@ -195,14 +266,18 @@
     {
       "id": 5,
       "name": "Allgemeine Aufgaben",
-      "frequency": "weekly",
+      "frequency": "monthly",
       "estimatedTime": 20,
       "subtasks": [
         {
           "id": 501,
           "name": "Fenster putzen",
           "description": "Fenster innen und außen reinigen",
-          "cleaningProducts": ["Glasreiniger", "Fensterwischer", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Glasreiniger",
+            "Fensterwischer",
+            "Mikrofasertuch"
+          ],
           "tips": "Klare Sicht auf die Nachbarn. Winken nicht vergessen!",
           "cautions": "Fensterputzen ist kein Extremsport."
         },
@@ -210,7 +285,10 @@
           "id": 502,
           "name": "Staub wischen auf hohen Oberflächen",
           "description": "Staub von Regalen, Bilderrahmen etc. entfernen",
-          "cleaningProducts": ["Staubwedel", "Mikrofasertuch"],
+          "cleaningProducts": [
+            "Staubwedel",
+            "Mikrofasertuch"
+          ],
           "tips": "Staubfänger-Safari: Fang sie alle!",
           "cautions": "Akrobatik nur für Fortgeschrittene."
         },
@@ -218,7 +296,9 @@
           "id": 503,
           "name": "Spinnweben entfernen",
           "description": "Ecken und Decken von Spinnweben befreien",
-          "cleaningProducts": ["Staubwedel mit langem Griff"],
+          "cleaningProducts": [
+            "Staubwedel mit langem Griff"
+          ],
           "tips": "Spiderman würde das nicht gutheißen.",
           "cautions": "Keine Angst, die meisten Spinnen sind vegetarisch. Nicht."
         }
@@ -234,7 +314,11 @@
           "id": 601,
           "name": "Ofen gründlich reinigen",
           "description": "Innenraum und Backbleche gründlich säubern",
-          "cleaningProducts": ["Ofenreiniger", "Schutzhandschuhe", "Schwamm"],
+          "cleaningProducts": [
+            "Ofenreiniger",
+            "Schutzhandschuhe",
+            "Schwamm"
+          ],
           "tips": "Archäologische Funde bitte dem Museum melden.",
           "cautions": "Ofen an = Hände weg. Einfache Regel, oder?"
         }
