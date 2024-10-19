@@ -29,58 +29,78 @@ A fair and efficient task distribution system for Wohngemeinschaften (WGs) or sh
 
 4. Access the Putzplan system at `http://localhost:9876`.
 
+## 📸 Screenshots
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <div style="flex: 0 0 48%; margin-bottom: 20px;">
+    <img src="screenshots/1.png" width="100%" alt="First Open">
+    <p align="center"><strong>First Open</strong></p>
+  </div>
+  <div style="flex: 0 0 48%; margin-bottom: 20px;">
+    <img src="screenshots/2.png" width="100%" alt="Landing Page">
+    <p align="center"><strong>Landing Page</strong></p>
+  </div>
+  <div style="flex: 0 0 48%; margin-bottom: 20px;">
+    <img src="screenshots/3.png" width="100%" alt="Task Overview">
+    <p align="center"><strong>Task Overview</strong></p>
+  </div>
+  <div style="flex: 0 0 48%; margin-bottom: 20px;">
+    <img src="screenshots/4.png" width="100%" alt="Task Details">
+    <p align="center"><strong>Task Details</strong></p>
+  </div>
+</div>
 ## 🛠️ Configuration
 
 Create a `data.json` file in the project root with the following structure:
 
 ```json
 {
-  "tasks": [
-    {
-      "id": 1,
-      "name": "Clean Bathroom",
-      "frequency": "weekly",
-      "estimatedTime": 45,
-      "subtasks": [
-        {
-          "id": 101,
-          "name": "Clean Toilet",
-          "description": "Thoroughly clean and disinfect the toilet",
-          "cleaningProducts": ["Toilet cleaner", "Brush", "Gloves"],
-          "tips": "Don't forget to clean under the rim",
-          "cautions": "Use gloves and ensure good ventilation"
-        },
-        // More subtasks...
-      ]
-    },
-    // More tasks...
-  ],
-  "users": [
-    {
-      "name": "Alice",
-      "color": "#FF5733"
-    },
-    // More users...
-  ]
+   "tasks": [
+      {
+         "id": 1,
+         "name": "Clean Bathroom",
+         "frequency": "weekly",
+         "estimatedTime": 45,
+         "subtasks": [
+            {
+               "id": 101,
+               "name": "Clean Toilet",
+               "description": "Thoroughly clean and disinfect the toilet",
+               "cleaningProducts": ["Toilet cleaner", "Brush", "Gloves"],
+               "tips": "Don't forget to clean under the rim",
+               "cautions": "Use gloves and ensure good ventilation"
+            },
+            // More subtasks...
+         ]
+      },
+      // More tasks...
+   ],
+   "users": [
+      {
+         "name": "Alice",
+         "color": "#FF5733"
+      },
+      // More users...
+   ]
 }
 ```
 ### Interfaces:
 ```ts
 export interface Subtask {
-    id: number;
-    name: string;
-    description: string;
-    cleaningProducts: string[];
-    tips: string;
-    cautions: string;
+   id: number;
+   name: string;
+   description: string;
+   cleaningProducts: string[];
+   tips: string;
+   cautions: string;
 }
 
 export interface Task {
-    id: number;
-    name: string;
-    frequency: 'weekly' | 'bi-weekly' | 'monthly';
-    estimatedTime: number;
-    subtasks: Subtask[];
+   id: number;
+   name: string;
+   frequency: 'weekly' | 'bi-weekly' | 'monthly';
+   estimatedTime: number;
+   subtasks: Subtask[];
 }
 ```
 
@@ -91,9 +111,9 @@ You can find a sample `data.example.json` file in the project root.
 
 1. Tasks are defined with properties such as frequency and estimated time.
 2. Each week, the system:
-    - Determines which tasks are due
-    - Distributes tasks evenly among users
-    - Rotates the starting point for distribution to ensure long-term fairness
+   - Determines which tasks are due
+   - Distributes tasks evenly among users
+   - Rotates the starting point for distribution to ensure long-term fairness
 3. The system tracks each user's task history and total time spent.
 
 ## ❓ FAQ
