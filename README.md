@@ -31,7 +31,7 @@ A fair and efficient task distribution system for Wohngemeinschaften (WGs) or sh
 
 ## 📸 Screenshots
 
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 200px">
   <div style="flex: 0 0 48%; margin-bottom: 20px;">
     <img src="screenshots/1.png" width="100%" alt="First Open">
     <p align="center"><strong>First Open</strong></p>
