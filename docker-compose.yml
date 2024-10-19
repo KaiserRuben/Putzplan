@@ -3,4 +3,4 @@ services:
   putzplan:
     build: .
     ports:
-      - "80:80"
+      - "9876:80"
