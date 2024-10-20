@@ -3,17 +3,24 @@ FROM node:14 AS builder
 
 WORKDIR /usr/src/app
 
+# Copy only package files first to leverage Docker cache
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci --only=production
 
-COPY . .
+# Copy the rest of the files
+COPY tsconfig*.json ./
+COPY vite.config.ts ./
+COPY index.html ./
+COPY public ./public
+COPY src ./src
 
 RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
+# Copy only the built files from the builder stage
 COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
 EXPOSE 80
