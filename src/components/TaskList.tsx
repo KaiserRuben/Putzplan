@@ -1,86 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {getTasksForWeek, Subtask, Task} from "../utils/taskAssigner";
+import {getTasksForWeek, Task} from "../utils/taskAssigner";
 import {useLocalStorage} from "../utils/localstorage.ts";
 import {getCurrentWeekNumber} from "../utils/date.ts";
 import {motion, AnimatePresence} from 'framer-motion';
-import {FaClock, FaRedo, FaChevronDown, FaChevronUp,FaSprayCan, FaLightbulb, FaChevronLeft, FaChevronRight} from 'react-icons/fa';
-const SubtaskCards: React.FC<{ subtasks: Subtask[] }> = ({ subtasks }) => {
-    const [currentSubtask, setCurrentSubtask] = useState(0);
-
-    const nextSubtask = () => {
-        setCurrentSubtask((prev) => (prev + 1) % subtasks.length);
-    };
-
-    const prevSubtask = () => {
-        setCurrentSubtask((prev) => (prev - 1 + subtasks.length) % subtasks.length);
-    };
-
-    return (
-        <div className="relative">
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={currentSubtask}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-gradient-to-br from-indigo-100 to-purple-100 p-6 rounded-xl shadow-lg"
-                >
-                    <h3 className="text-xl font-bold text-indigo-800 mb-3">{subtasks[currentSubtask].name}</h3>
-                    <p className="text-gray-700 mb-4">{subtasks[currentSubtask].description}</p>
-                    {subtasks[currentSubtask].cleaningProducts && (
-                        <div className="flex items-center mb-3">
-                            <FaSprayCan className="text-green-500 mr-2" />
-                            <p className="text-green-700">
-                                <strong>Putzprodukte:</strong> {subtasks[currentSubtask].cleaningProducts.join(', ')}
-                            </p>
-                        </div>
-                    )}
-                    {subtasks[currentSubtask].tips && (
-                        <div className="flex items-center">
-                            <FaLightbulb className="text-yellow-500 mr-2" />
-                            <p className="text-yellow-700">
-                                <strong>Tipp:</strong> {subtasks[currentSubtask].tips}
-                            </p>
-                        </div>
-                    )}
-                </motion.div>
-            </AnimatePresence>
-            <div className="absolute top-1/2 -left-4 transform -translate-y-1/2">
-                <button
-                    onClick={prevSubtask}
-                    className="bg-purple-500 text-white p-2 rounded-full shadow-md hover:bg-purple-600 transition-colors duration-300"
-                >
-                    <FaChevronLeft />
-                </button>
-            </div>
-            <div className="absolute top-1/2 -right-4 transform -translate-y-1/2">
-                <button
-                    onClick={nextSubtask}
-                    className="bg-purple-500 text-white p-2 rounded-full shadow-md hover:bg-purple-600 transition-colors duration-300"
-                >
-                    <FaChevronRight />
-                </button>
-            </div>
-            <div className="mt-4 flex justify-center">
-                {subtasks.map((_, index) => (
-                    <div
-                        key={index}
-                        className={`w-2 h-2 rounded-full mx-1 ${
-                            index === currentSubtask ? 'bg-purple-500' : 'bg-gray-300'
-                        }`}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
+import {FaClock, FaRedo, FaChevronDown, FaChevronUp} from 'react-icons/fa';
 const TaskList: React.FC = () => {
     const [viewMode, setViewMode] = useState<'full' | 'subtasks'>('full');
     const [currentUser] = useLocalStorage<string | null>('currentUser', null);
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [expandedTask, setExpandedTask] = useState<number | null>(null);
+    const [expandedTask, setExpandedTask] = useState<number | null>(1);
     const weekNumber = getCurrentWeekNumber();
 
     useEffect(() => {
@@ -202,7 +131,12 @@ const TaskList: React.FC = () => {
                                         className="p-6"
                                     >
                                         <ul className="space-y-4">
-                                            <SubtaskCards subtasks={task.subtasks} />
+                                            {task.subtasks.map((subtask) => ( // list subtask name
+                                                <li key={subtask.id} className="bg-gray-100 p-4 rounded-xl shadow-md">
+                                                    <h3 className="text-lg font-bold text-gray-800">{subtask.name}</h3>
+                                                    <p className="text-gray-600">{subtask.description}</p>
+                                                </li>
+                                            ))}
                                         </ul>
                                     </motion.div>
                                 )}
