@@ -6,12 +6,13 @@ WORKDIR /usr/src/app
 # Copy only package files first to leverage Docker cache
 COPY package*.json ./
 
-RUN npm ci --omit=dev
+RUN npm i
 
 # Copy the rest of the files
 COPY tsconfig*.json ./
 COPY vite.config.ts ./
 COPY index.html ./
+COPY data.json ./
 COPY public ./public
 COPY src ./src
 
