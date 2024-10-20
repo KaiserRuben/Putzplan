@@ -96,18 +96,13 @@ const TaskList: React.FC = () => {
                 className="space-y-6"
             >
                 {tasks.map((task) => (
-
                     <motion.div
                         key={task.id}
                         variants={itemVariants}
                         className="bg-white rounded-2xl shadow-lg overflow-hidden"
                     >
-                        <Link
-                            to={`/task/${task.id}`}>
-                            <div
-                                className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 cursor-pointer"
-                                onClick={() => setExpandedTask(expandedTask === task.id ? null : task.id)}
-                            >
+                        <Link to={`/task/${task.id}`}>
+                            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 cursor-pointer">
                                 <h2 className="text-2xl font-bold text-white mb-2">{task.name}</h2>
                                 <div className="flex items-center text-indigo-100">
                                     <FaClock className="mr-2"/>
@@ -131,10 +126,14 @@ const TaskList: React.FC = () => {
                                         className="p-6"
                                     >
                                         <ul className="space-y-4">
-                                            {task.subtasks.map((subtask) => ( // list subtask name
+                                            {task.subtasks.map((subtask, index) => (
                                                 <li key={subtask.id} className="bg-gray-100 p-4 rounded-xl shadow-md">
-                                                    <h3 className="text-lg font-bold text-gray-800">{subtask.name}</h3>
-                                                    <p className="text-gray-600">{subtask.description}</p>
+                                                    <Link to={`/task/${task.id}?subtask=${index}`} className="block">
+                                                        <h3 className="text-lg font-bold text-gray-800 hover:text-purple-600 transition-colors duration-200">
+                                                            {subtask.name}
+                                                        </h3>
+                                                        <p className="text-gray-600">{subtask.description}</p>
+                                                    </Link>
                                                 </li>
                                             ))}
                                         </ul>
@@ -148,8 +147,6 @@ const TaskList: React.FC = () => {
                                 </div>
                             </AnimatePresence>
                         )}
-
-
                     </motion.div>
                 ))}
             </motion.div>

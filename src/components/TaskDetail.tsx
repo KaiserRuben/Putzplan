@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getTasksForWeek, Task } from "../utils/taskAssigner";
+import {getTasksForWeek, Subtask, Task} from "../utils/taskAssigner";
 import { useLocalStorage } from "../utils/localstorage.ts";
 import { getCurrentWeekNumber } from "../utils/date.ts";
 import confetti from 'canvas-confetti';
@@ -20,6 +20,7 @@ import {
 const TaskDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const location = useLocation();
     const weekNumber = getCurrentWeekNumber();
     const yearNumber = new Date().getFullYear();
     const [currentUser] = useLocalStorage<string | null>('currentUser', null);
@@ -33,8 +34,16 @@ const TaskDetail: React.FC = () => {
             const userTasks = getTasksForWeek(weekNumber)[currentUser] || [];
             const foundTask = userTasks.find((t) => t.id === parseInt(id));
             setTask(foundTask || null);
+
+            // Parse the subtask index from the URL
+            const searchParams = new URLSearchParams(location.search);
+            const subtaskIndex = searchParams.get('subtask');
+            if (subtaskIndex !== null) {
+                setCurrentSubtaskIndex(parseInt(subtaskIndex));
+            }
         }
-    }, [currentUser, id, weekNumber]);
+    }, [currentUser, id, weekNumber, location]);
+
 
     const handlePrevSubtask = () => {
         setCurrentSubtaskIndex((prev) => (prev > 0 ? prev - 1 : task!.subtasks.length - 1));
@@ -80,18 +89,47 @@ const TaskDetail: React.FC = () => {
     const progress = (completedSubtasks.length / task.subtasks.length) * 100;
     const isCurrentSubtaskCompleted = completedSubtasks.includes(currentSubtaskIndex);
 
+    const renderEnhancedProgressBar = () => {
+        return (
+            <div className="bg-gray-100 rounded-full h-3 sm:h-4 mb-4 sm:mb-6 overflow-hidden flex">
+                {task.subtasks.map((_, index) => {
+                    const isCompleted = completedSubtasks.includes(index);
+                    const isCurrent = index === currentSubtaskIndex;
+                    let bgColor = 'bg-gray-300';
+
+                    if (isCompleted) {
+                        bgColor = 'bg-emerald-500';
+                    } else if (isCurrent) {
+                        bgColor = 'bg-indigo-500';
+                    }
+
+                    return (
+                        <motion.div
+                            key={index}
+                            className={`${bgColor} h-full`}
+                            style={{ width: `${100 / task.subtasks.length}%` }}
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                        />
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
         <div className="h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4 flex flex-col">
             {streak > 0 && (
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 0.3}}
                     className="bg-gradient-to-r from-orange-400 to-red-400 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4"
                 >
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                            <FaFire className="text-yellow-300 text-xl sm:text-2xl mr-2 sm:mr-3 flex-shrink-0" />
+                            <FaFire className="text-yellow-300 text-xl sm:text-2xl mr-2 sm:mr-3 flex-shrink-0"/>
                             <div>
                                 <p className="text-white text-sm sm:text-xl font-bold">
                                     {streak} Day{streak > 1 ? 's' : ''} Streak!
@@ -107,9 +145,9 @@ const TaskDetail: React.FC = () => {
                     </div>
                     {streak > 1 && (
                         <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: '100%' }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
+                            initial={{width: 0}}
+                            animate={{width: '100%'}}
+                            transition={{duration: 0.5, delay: 0.2}}
                             className="h-1 sm:h-2 bg-yellow-300 mt-2 sm:mt-3 rounded-full"
                         />
                     )}
@@ -126,18 +164,20 @@ const TaskDetail: React.FC = () => {
                     <h2 className="text-2xl sm:text-3xl font-bold text-purple-600">{currentSubtask.name}</h2>
                 </div>
 
-                <div className="bg-purple-100 rounded-full h-3 sm:h-4 mb-4 sm:mb-6 overflow-hidden">
-                    <motion.div
-                        className="bg-purple-500 h-full"
-                        initial={{width: 0}}
-                        animate={{width: `${progress}%`}}
-                        transition={{duration: 0.5}}
-                    />
+                {renderEnhancedProgressBar()}
+
+                <div className="text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4 flex justify-between items-center">
+                    <span>{completedSubtasks.length}/{task.subtasks.length} subtasks completed</span>
+                    <div className="flex items-center">
+                        <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1"></div>
+                        <span className="text-xs mr-2">Completed</span>
+                        <div className="w-3 h-3 rounded-full bg-indigo-500 mr-1"></div>
+                        <span className="text-xs mr-2">Current</span>
+                        <div className="w-3 h-3 rounded-full bg-gray-300 mr-1"></div>
+                        <span className="text-xs">Pending</span>
+                    </div>
                 </div>
 
-                <div className="text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4">
-                    {completedSubtasks.length}/{task.subtasks.length} subtasks completed
-                </div>
 
                 <div className="flex-grow overflow-y-auto">
                     <AnimatePresence mode="wait">
@@ -229,15 +269,15 @@ const TaskDetail: React.FC = () => {
                     onClick={handleExit}
                     className="bg-red-500 text-white p-3 sm:p-4 rounded-full shadow-md text-xl sm:text-2xl"
                 >
-                <FaTimes />
+                    <FaTimes/>
                 </motion.button>
                 <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                    whileHover={{scale: 1.1}}
+                    whileTap={{scale: 0.9}}
                     onClick={handleNextSubtask}
                     className="bg-purple-600 text-white p-3 sm:p-4 rounded-full shadow-md text-xl sm:text-2xl"
                 >
-                    <FaChevronRight />
+                    <FaChevronRight/>
                 </motion.button>
             </div>
         </div>
