@@ -9,6 +9,8 @@ COPY package*.json ./
 RUN npm i
 
 # Copy the rest of the files
+COPY postcss.config.js ./
+COPY tailwind.config.js ./
 COPY tsconfig*.json ./
 COPY vite.config.ts ./
 COPY index.html ./
