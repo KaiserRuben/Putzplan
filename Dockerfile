@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 # Copy only package files first to leverage Docker cache
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Copy the rest of the files
 COPY tsconfig*.json ./
