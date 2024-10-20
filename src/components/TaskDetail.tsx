@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import {getTasksForWeek, Subtask, Task} from "../utils/taskAssigner";
+import {getTasksForWeek, Task} from "../utils/taskAssigner";
 import { useLocalStorage } from "../utils/localstorage.ts";
 import { getCurrentWeekNumber } from "../utils/date.ts";
 import confetti from 'canvas-confetti';
@@ -86,7 +86,6 @@ const TaskDetail: React.FC = () => {
     if (!task) return null;
 
     const currentSubtask = task.subtasks[currentSubtaskIndex];
-    const progress = (completedSubtasks.length / task.subtasks.length) * 100;
     const isCurrentSubtaskCompleted = completedSubtasks.includes(currentSubtaskIndex);
 
     const renderEnhancedProgressBar = () => {
