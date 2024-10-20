@@ -128,6 +128,9 @@ t_i = t_j for all i, j ∈ ℕ
 **Q: Can users swap assigned tasks?**
 A: The current system doesn't have a built-in swapping feature. Users can manually agree to swap tasks.
 
+**Q: When does the week change? Why is it Wednesday?**
+A: Cause from experience, tasks are usually done on weekends.
+
 **Q: Is my data stored securely?**
 A: All user data and task history are stored locally on your device.
 
