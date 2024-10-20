@@ -113,22 +113,26 @@ You can find a sample `data.example.json` file in the project root.
 A: Tasks are assigned weekly, but the system considers different frequencies (weekly, bi-weekly, monthly).
 
 **Q: Can I add or remove tasks?**
-A: Yes, modify the `data.json` file to add or remove tasks. The system will adjust automatically.
+A: Yes, modify the `data.json` file to add or remove tasks. The system will adjust automatically. Tasks might be reassigned.
 
 **Q: How does the system ensure fairness?**
-A: It uses rotation, even distribution, and tracks total time spent on tasks for each user.
+A: It uses rotation and even distribution.
+
+For:
+- n := total time passed
+- t_i := time spent by user i, where i ∈ ℕ
+
+As n → ∞:
+t_i = t_j for all i, j ∈ ℕ
 
 **Q: Can users swap assigned tasks?**
 A: The current system doesn't have a built-in swapping feature. Users can manually agree to swap tasks.
-
-**Q: How can I view task history and user statistics?**
-A: User statistics, including total time spent and task counts, are available through the user interface.
 
 **Q: Is my data stored securely?**
 A: All user data and task history are stored locally on your device.
 
 **Q: Can I customize the interface appearance?**
-A: The current version doesn't include interface customization, but users are assigned colors for easy distinction.
+A: The current version doesn't include interface customization.
 
 **Q: What if a task takes longer than estimated?**
 A: Adjust the estimated time in `data.json` if a task consistently takes longer than expected.
