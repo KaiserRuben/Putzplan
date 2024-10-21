@@ -131,7 +131,7 @@ const TaskDetail: React.FC = () => {
                             <FaFire className="text-yellow-300 text-xl sm:text-2xl mr-2 sm:mr-3 flex-shrink-0"/>
                             <div>
                                 <p className="text-white text-sm sm:text-xl font-bold">
-                                    {streak} Day{streak > 1 ? 's' : ''} Streak!
+                                    {streak} Task{streak > 1 ? 's' : ''} Streak!
                                 </p>
                                 <p className="text-yellow-100 text-xs sm:text-sm">
                                     {streak > 1 ? 'Du bist in Topform! 🔥' : 'Toller Start! Weiter so!'}
