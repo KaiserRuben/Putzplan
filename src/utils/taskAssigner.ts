@@ -35,7 +35,7 @@ export interface WeeklyAssignment {
     [userName: string]: Task[];
 }
 
-type Frequency = 'weekly' | 'bi-weekly' | 'monthly';
+type Frequency = 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly';
 
 export class TaskAssigner {
     private tasks: Task[];
@@ -63,7 +63,8 @@ export class TaskAssigner {
         const frequencyMap: { [K in Frequency]: number } = {
             'weekly': 1,
             'bi-weekly': 2,
-            'monthly': 4
+            'monthly': 4,
+            'bi-monthly': 8
         };
         return week % frequencyMap[task.frequency] === 0;
     }

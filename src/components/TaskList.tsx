@@ -5,6 +5,7 @@ import {useLocalStorage} from "../utils/localstorage.ts";
 import {getCurrentWeekNumber} from "../utils/date.ts";
 import {motion, AnimatePresence} from 'framer-motion';
 import {FaClock, FaRedo, FaChevronDown, FaChevronUp} from 'react-icons/fa';
+
 const TaskList: React.FC = () => {
     const [viewMode, setViewMode] = useState<'full' | 'subtasks'>('full');
     const [currentUser] = useLocalStorage<string | null>('currentUser', null);
@@ -32,6 +33,8 @@ const TaskList: React.FC = () => {
                 return 'Alle zwei Wochen';
             case 'monthly':
                 return 'Monatlich';
+            case 'bi-monthly':
+                return 'Alle zwei Monate';
             default:
                 return frequency;
         }
