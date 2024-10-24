@@ -134,8 +134,12 @@ export function getUsers(): inputUser[] {
 
 // // Example usage:
 //
-// const assigner = new TaskAssigner(tasks, users);
+// import {getCurrentWeekNumber} from "./date";
 //
+// const assigner = new TaskAssigner(tasks, users);
+// const weeklyAssignment = assigner.getTasksForWeek(getCurrentWeekNumber());
+// console.log(JSON.stringify(weeklyAssignment, null, 2));
+
 // // Test for multiple weeks
 // for (let week = 1; week <= 6; week++) {
 //     console.log(`Week ${week}:`);
