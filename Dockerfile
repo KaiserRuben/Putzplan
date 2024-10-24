@@ -14,9 +14,9 @@ COPY tailwind.config.js ./
 COPY tsconfig*.json ./
 COPY vite.config.ts ./
 COPY index.html ./
-COPY data.json ./
 COPY public ./public
 COPY src ./src
+COPY data.json ./
 
 RUN npm run build
 
