@@ -89,7 +89,7 @@ export interface Subtask {
 export interface Task {
    id: number;
    name: string;
-   frequency: 'weekly' | 'bi-weekly' | 'monthly';
+   frequency: 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly' ;
    estimatedTime: number;
    subtasks: Subtask[];
 }

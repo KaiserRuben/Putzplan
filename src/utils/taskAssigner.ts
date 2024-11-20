@@ -15,7 +15,7 @@ export interface Subtask {
 export interface Task {
     id: number;
     name: string;
-    frequency: 'weekly' | 'bi-weekly' | 'monthly';
+    frequency: 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly' ;
     estimatedTime: number;
     subtasks: Subtask[];
 }
@@ -35,7 +35,7 @@ export interface WeeklyAssignment {
     [userName: string]: Task[];
 }
 
-type Frequency = 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly';
+type Frequency = 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly' ;
 
 export class TaskAssigner {
     private tasks: Task[];
@@ -64,7 +64,10 @@ export class TaskAssigner {
             'weekly': 1,
             'bi-weekly': 2,
             'monthly': 4,
-            'bi-monthly': 8
+            'bi-monthly': 8,
+            'three-monthly' : 12,
+            'four-monthly' : 16,
+            'six-monthly' : 24
         };
         return week % frequencyMap[task.frequency] === 0;
     }
@@ -75,7 +78,7 @@ export class TaskAssigner {
 
         // Sort tasks by frequency (less frequent first) and then by estimated time (longer first)
         weekTasks.sort((a, b) => {
-            const freqOrder = {'monthly': 0, 'bi-weekly': 1, 'weekly': 2};
+            const freqOrder = {'six-monthly' :0,'four-monthly': 1,'three-monthly': 2,'bi-monthly': 3,'monthly': 4, 'bi-weekly': 5, 'weekly': 6};
             if (freqOrder[a.frequency] !== freqOrder[b.frequency]) {
                 return freqOrder[a.frequency] - freqOrder[b.frequency];
             }
