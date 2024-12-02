@@ -35,6 +35,12 @@ const TaskList: React.FC = () => {
                 return 'Monatlich';
             case 'bi-monthly':
                 return 'Alle zwei Monate';
+            case 'three-monthly':
+                return 'Alle drei Monate';
+            case 'four-monthly':
+                return 'Alle vier Monate';
+            case 'six-monthly':
+                return 'Alle sechs Monate';
             default:
                 return frequency;
         }
