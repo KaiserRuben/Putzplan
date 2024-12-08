@@ -15,7 +15,7 @@ export interface Subtask {
 export interface Task {
     id: number;
     name: string;
-    frequency: 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly' ;
+    frequency: 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly';
     estimatedTime: number;
     subtasks: Subtask[];
 }
@@ -35,7 +35,7 @@ export interface WeeklyAssignment {
     [userName: string]: Task[];
 }
 
-type Frequency = 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly' ;
+type Frequency = 'weekly' | 'bi-weekly' | 'monthly' | 'bi-monthly' | 'three-monthly' | 'four-monthly' | 'six-monthly';
 
 export class TaskAssigner {
     private tasks: Task[];
@@ -64,9 +64,9 @@ export class TaskAssigner {
             'bi-weekly': 2,
             'monthly': 4,
             'bi-monthly': 8,
-            'three-monthly' : 12,
-            'four-monthly' : 16,
-            'six-monthly' : 24
+            'three-monthly': 12,
+            'four-monthly': 16,
+            'six-monthly': 24
         };
         return week % frequencyMap[task.frequency] === 0;
     }
@@ -143,7 +143,7 @@ export function getUsers(): inputUser[] {
     return users;
 }
 
-export function     analyzeTaskDistribution(weeks: number) {
+export function analyzeTaskDistribution(weeks: number) {
     // Track assignments and time per user
     const userStats: {
         [userName: string]: {
@@ -207,7 +207,7 @@ export function     analyzeTaskDistribution(weeks: number) {
         Object.entries(stats.taskCounts)
             .sort((a, b) => b[1] - a[1])
             .forEach(([taskName, count]) => {
-                console.log(`${taskName}: ${count} times (${Math.round(count/weeks * 100)}%)`);
+                console.log(`${taskName}: ${count} times (${Math.round(count / weeks * 100)}%)`);
             });
         console.groupEnd();
     });
@@ -229,7 +229,7 @@ export function     analyzeTaskDistribution(weeks: number) {
     const timeSpread = Math.max(...totalTimePerUser.map(u => u.totalTime)) -
         Math.min(...totalTimePerUser.map(u => u.totalTime));
     console.log(`Time spread between users: ${timeSpread} minutes`);
-    console.log(`Average time per week spread: ${Math.round(timeSpread/weeks)} minutes`);
+    console.log(`Average time per week spread: ${Math.round(timeSpread / weeks)} minutes`);
     console.groupEnd();
 
     console.groupEnd();
